@@ -1,0 +1,16 @@
+@use "./styles/mixins" as *;
+@use "./styles/variables" as *;
+
+#root {
+  font-family: $primary-font;
+  color: $black;
+  background-color: $white;
+  margin: 0;
+  padding: 0;
+
+  @include desktop {
+    max-width: 63.75rem;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+}
