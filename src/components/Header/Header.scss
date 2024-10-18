@@ -8,23 +8,37 @@
   padding: 1.5rem 2rem;
   color: $bell-gray;
   border-bottom: 1px solid $bell-gray;
+  font-family: $secondary-font;
+
+  //shadow effect
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: box-shadow 0.3s ease;
+  z-index: 1000;
+
+  &--shadow {
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.6);
+  }
 
   &__title {
     color: $white;
     font-family: $secondary-font;
-    font-weight: 600;
+    font-weight: 800;
     font-size: 1.5rem;
   }
 
   &__nav {
     @include flex-container($justify: space-around);
     width: 40vw;
+    color: $bell-gray;
   }
 
   &__link {
     cursor: pointer;
-    color: $bell-gray;
-    padding: 0.5rem 0.8rem;
+    color: inherit;
+    padding: 0.5rem 1.2rem;
     text-decoration: none;
 
     &:hover {

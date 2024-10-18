@@ -1,4 +1,17 @@
-.link{
-    color: blue;
-    font-style: italic;
+@use "../../styles/mixins" as *;
+@use "../../styles/variables" as *;
+
+.notFound-container {
+  padding: 5rem;
+  @include flex-container($direction: column, $align: center, $justify: center);
+  gap: 1rem;
+}
+
+h1,
+p {
+  font-family: $secondary-font;
+}
+.link {
+  color: blue;
+  font-style: italic;
 }
