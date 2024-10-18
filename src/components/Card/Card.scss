@@ -34,15 +34,20 @@
     margin-bottom: 10px;
   }
 
-  &__tag {
+  &__tags {
     display: flex;
-    justify-content: center;
-    background-color: $bell-blue;
-    color: $white;
-    padding: 5px;
-    border-radius: 15px;
-    font-size: 0.9rem;
+    flex-wrap: wrap;
+    margin-top: 5px;
   }
+  
+  &__tag {
+    background-color: #007bff;
+    color: white;
+    border-radius: 3px;
+    padding: 5px;
+    margin: 5px;
+    font-size: 12px;
+  }  
 
   &:hover .card__background {
     transform: scale(1.05);

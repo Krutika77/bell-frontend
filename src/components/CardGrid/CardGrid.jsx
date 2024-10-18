@@ -6,9 +6,12 @@ import './CardGrid.scss';
 const CardGrid = () => {
   const [organizations, setOrganizations] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8; // Set the number of items to display per page
+  const itemsPerPage = 8;
 
-  // Fetch data from the backend
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedFocus, setSelectedFocus] = useState('');
+  const [selectedDemographics, setSelectedDemographics] = useState('');
+
   useEffect(() => {
     const fetchOrganizations = async () => {
       try {
@@ -21,46 +24,96 @@ const CardGrid = () => {
     fetchOrganizations();
   }, []);
 
-  // Pagination logic
+  const filteredOrganizations = organizations.filter((org) => {
+    const matchesLocation = !selectedLocation || org.location === selectedLocation;
+    const matchesFocus = !selectedFocus || JSON.parse(org.project_focus).includes(selectedFocus);
+    const matchesDemographics = !selectedDemographics || JSON.parse(org.target_demographics).includes(selectedDemographics);
+    return matchesLocation && matchesFocus && matchesDemographics;
+  });
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentOrganizations = organizations.slice(indexOfFirstItem, indexOfLastItem);
-  
-  // Function to go to the next page
+  const currentOrganizations = filteredOrganizations.slice(indexOfFirstItem, indexOfLastItem);
+
   const nextPage = () => {
-    if (currentPage < Math.ceil(organizations.length / itemsPerPage)) {
+    if (currentPage < Math.ceil(filteredOrganizations.length / itemsPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  // Function to go to the previous page
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
+  const handleLocationChange = (e) => setSelectedLocation(e.target.value);
+  const handleFocusChange = (e) => setSelectedFocus(e.target.value);
+  const handleDemographicsChange = (e) => setSelectedDemographics(e.target.value);
+
+  const handleAllClick = () => {
+    setSelectedLocation('');
+    setSelectedFocus('');
+    setSelectedDemographics('');
+    setCurrentPage(1);
+  };
+
   return (
     <div>
+      <div className="filter-container">
+        <button onClick={handleAllClick}>All</button>
+
+        <select value={selectedLocation} onChange={handleLocationChange}>
+          <option value="">Select Location</option>
+          {[...new Set(organizations.map((org) => org.location))].map((location) => (
+            <option key={location} value={location}>
+              {location}
+            </option>
+          ))}
+        </select>
+
+        <select value={selectedFocus} onChange={handleFocusChange}>
+          <option value="">Select Project Focus</option>
+          {[...new Set(organizations.flatMap((org) => JSON.parse(org.project_focus)))].map((focus) => (
+            <option key={focus} value={focus}>
+              {focus}
+            </option>
+          ))}
+        </select>
+
+        <select value={selectedDemographics} onChange={handleDemographicsChange}>
+          <option value="">Select Target Demographics</option>
+          {[...new Set(organizations.flatMap((org) => JSON.parse(org.target_demographics)))].map((demographics) => (
+            <option key={demographics} value={demographics}>
+              {demographics}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="card-grid">
         {currentOrganizations.map((org) => (
-          <Card 
-            key={org.id} 
-            title={org.name} 
-            tag={org.project_focus} 
-            imageUrl={org.imageUrl} 
-            link={org.website} 
+          <Card
+            key={org.id}
+            title={org.name}
+            tags={JSON.parse(org.project_focus)} // Parse the tags as an array
+            imageUrl={org.imageUrl}
+            link={org.website}
           />
         ))}
       </div>
 
-      {/* Pagination Controls */}
       <div className="pagination">
         <button onClick={prevPage} disabled={currentPage === 1}>
           ← Prev
         </button>
-        <span>Page {currentPage} of {Math.ceil(organizations.length / itemsPerPage)}</span>
-        <button onClick={nextPage} disabled={currentPage === Math.ceil(organizations.length / itemsPerPage)}>
+        <span>
+          Page {currentPage} of {Math.ceil(filteredOrganizations.length / itemsPerPage)}
+        </span>
+        <button
+          onClick={nextPage}
+          disabled={currentPage === Math.ceil(filteredOrganizations.length / itemsPerPage)}
+        >
           Next →
         </button>
       </div>
