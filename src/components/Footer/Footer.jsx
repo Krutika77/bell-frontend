@@ -50,14 +50,6 @@ function Footer() {
             </span>
           </a>
         </div>
-
-        {/* <section className="footer__socials">
-        <a href="https://www.facebook.com/BellLetsTalk/">FACEBOOK</a>
-        <a href="https://twitter.com/Bell_LetsTalk">X</a>
-        <a href="https://www.instagram.com/bell_letstalk/">INSTAGRAM</a>
-        <a href="https://www.linkedin.com/showcase/bell-let's-talk/">
-          LINKEDIN
-        </a> */}
       </section>
     </footer>
   );
