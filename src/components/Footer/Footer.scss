@@ -2,16 +2,89 @@
 @use "../../styles/variables" as *;
 
 .footer {
-  @include flex-container($justify: space-between, $align: center);
+  @include flex-container($justify: space-between, $align: flex-start);
   background-color: $bell-gray;
-  padding: 3.5rem 2rem;
+  padding: 1rem 2rem;
   color: $bell-blue;
   font-size: 1.3rem;
 
   &__about {
-    @include flex-container($direction: column, $justify: space-between);
+    font-size: 1rem;
+
+    @include flex-container(
+      $direction: column,
+      $justify: space-between,
+      $align: center
+    );
+
+    &-title {
+      padding: 1rem;
+    }
+
+    &-links {
+      @include flex-container(
+        // $direction: column,
+        $justify: space-between,
+        $align: center
+      );
+      padding-top: 2rem;
+      font-size: 0.8rem;
+
+      & a {
+        padding: 0 0.5rem;
+        border-right: 1px solid $bell-blue;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  &__connect {
+    @include flex-container(
+      $direction: column,
+      $justify: space-between,
+      $align: center
+    );
+    gap: 1rem;
+  }
+
+  &__form-link {
+    color: $bell-blue;
+    font-size: 1rem;
+    border: none;
+    padding: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid $bell-blue;
+    }
   }
   &__socials {
-    @include flex-container($direction: column, $justify: space-between);
+    @include flex-container($justify: space-between);
+    gap: 1rem;
   }
+}
+
+.icon-ui {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  color: #00549a;
+  background-color: #fff;
+  @include flex-container($justify: center, $align: center);
+
+  &:hover {
+    background-color: #00549a;
+  }
+}
+.icon svg {
+  color: #00549a;
+  display: block;
+  width: 100%;
 }

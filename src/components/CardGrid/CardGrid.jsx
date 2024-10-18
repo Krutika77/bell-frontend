@@ -96,7 +96,7 @@ const CardGrid = () => {
           <Card
             key={org.id}
             title={org.name}
-            tags={JSON.parse(org.project_focus)} 
+            tags={JSON.parse(org.project_focus)} // Parse the tags as an array
             imageUrl={org.imageUrl}
             link={org.website}
           />
