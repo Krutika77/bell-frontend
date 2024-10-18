@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage/HomePage'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ConnectForm from "./pages/ConnectForm";
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
     <Routes>
       <Route path = '/' element = {<HomePage/>} />
       <Route path="/connect" element={<ConnectForm />} />
+      <Route path="*" element = {<NotFoundPage/>}/>
     </Routes>
     </BrowserRouter>
   )
