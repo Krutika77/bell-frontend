@@ -34,7 +34,7 @@ function Header() {
           Explore
         </NavLink>
         <NavLink
-          to="/choose"
+          to="/quiz"
           className={({ isActive }) =>
             isActive ? "header__link header__link--active" : "header__link"
           }
