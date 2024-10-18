@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import "./Quiz.scss";
+import "./QuizPage.scss";
 
 // Mock data for testing the component function until we have a better idea of the logic
 const mockData = [
@@ -31,7 +31,7 @@ const mockData = [
 	}
 ]
 
-function Quiz() {
+function QuizPage() {
 	const [questions, setQuestions] = useState([]),
 		[choices, setChoices] = useState([]),
 		[index, setIndex] = useState(0),
@@ -75,7 +75,7 @@ function Quiz() {
 
 	return (
 	<section className="quiz" aria-busy={!questions.length}>
-		<h1 className="quiz__title">{questions.length ? "Quiz" : "Loading..."}</h1>
+		<h1 className="quiz__title">{questions.length ? "Find Your Ideal Initiative" : "Loading..."}</h1>
 		{!questions.length ? "" : (<>
 			<progress
 				className="quiz__progress"
@@ -104,10 +104,10 @@ function Quiz() {
 			</>)}
 			{!done && (<>
 				{questions[index]?.answers.map((a, i) => (
-					<label key={i} style={{display: "block"}}>
+					<label key={i} className="quiz__answer-label">
 						<input
 							type="radio"
-							className="quiz__answer"
+							className="quiz__answer-btn"
 							name="quiz-choice"
 							onChange={()=>handleAnswer(a)}
 							checked={a === choices?.[index]}/>
@@ -124,7 +124,6 @@ function Quiz() {
 					onClick={handleNext}
 					disabled={index === choices.length || index === questions.length - 1}
 				>Next</button>
-				<br/>
 				<button
 					className="quiz__submit-btn"
 					ref={submitRef}
@@ -138,4 +137,4 @@ function Quiz() {
 	);
 }
 
-export default Quiz;
+export default QuizPage;

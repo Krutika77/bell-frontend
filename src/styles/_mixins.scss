@@ -11,3 +11,31 @@
     @content;
   }
 }
+
+/// Allows you to style the background/track of a `<progress>` element in a
+/// cross-browser-compatible way.
+/// @content Styles to apply to the progress bar track.
+@mixin progress-track {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: none;
+	@supports selector(::-moz-progress-bar) {
+		@content;
+	}
+	&::-webkit-progress-bar {
+		@content;
+	}
+}
+
+/// Allows you to style the filled in portion of a `<progress>` element in a
+/// cross-browser-compatible way.
+/// @content Styles to apply to the progress bar's filled in portion.
+@mixin progress-value {
+	&::-webkit-progress-value {
+		@content;
+	}
+	&::-moz-progress-bar {
+		@content;
+	}
+}

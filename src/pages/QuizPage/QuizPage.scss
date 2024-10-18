@@ -1,0 +1,85 @@
+@use "../../styles/variables" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/mixins" as *;
+
+.quiz {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	row-gap: .5rem;
+	max-width: 34rem;
+	margin: 2rem auto;
+	padding: 1rem;
+	&, & * {
+		box-sizing: border-box;
+	}
+
+	&__title,
+	&__progress,
+	&__subheading,
+	&__answer-label,
+	&__submit-btn {
+		flex: 1 0 100%;
+	}
+
+	&__title, &__subheading {
+		font-family: $secondary-font;
+		font-weight: 700;
+		margin-block: .2rem;
+	}
+	&__title {
+		font-size: 40px;
+	}
+	&__subheading {
+		font-size: 20px;
+		font-weight: 600;
+	}
+
+	&__progress {
+		@include progress-track {
+			height: 1rem;
+			border-radius: .25rem;
+			background: #e1e1e1;
+		}
+		@include progress-value {
+			border-radius: .25rem;
+			background: $bell-blue;
+		}
+	}
+
+	&__answer-label {
+		border-radius: 30px;
+		border: 1.5px solid $bell-blue;
+		padding: .45rem .9rem;
+		transition: background-color .15s ease-in-out;
+		cursor: pointer;
+		&:active, &:focus, &:hover, &:has(:checked) {
+			background-color: rgba($bell-blue, .1);
+		}
+	}
+
+	&__submit-btn, &__nav-btn {
+		color: rgba($bell-blue, .5);
+		background: $bell-gray;
+		border: 1.5px solid $bell-gray;
+		border-radius: 30px;
+		padding: .45rem .9rem;
+		&:not(:disabled) {
+			cursor: pointer;
+			color: $bell-blue;
+			&:hover {
+				border-color: $bell-blue;
+			}
+		}
+	}
+	&__submit-btn {
+		transition: background-color .15s ease-in-out;
+		border-color: rgba($bell-blue, .5);
+		&:not(:disabled) {
+			border-color: $bell-blue;
+			&:active, &:focus, &:hover {
+				background-color: rgba($bell-blue, .2);
+			}
+		}
+	}
+}
