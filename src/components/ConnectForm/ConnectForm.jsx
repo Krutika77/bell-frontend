@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "./ConnectForm.scss";
 
 function ConnectForm() {
@@ -51,9 +52,17 @@ function ConnectForm() {
       console.log("Form submitted: ", formData);
       setErrors({});
 
-      alert(
-        "We received your message and will get in touch with you soon! Thank you for connecting with us."
-      );
+      await Swal.fire({
+        title: "Message Received!",
+        text: "We will get in touch with you soon! Thank you for connecting with us.",
+        icon: "success",
+        confirmButtonText: "Return to Home",
+        customClass: {
+          title: "swal-title",
+          content: "swal-content",
+          confirmButton: "swal-confirm-button",
+        },
+      });
 
       setFormData({
         name: "",

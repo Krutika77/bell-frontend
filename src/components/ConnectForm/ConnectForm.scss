@@ -105,3 +105,24 @@
   font-style: italic;
   font-size: 0.9rem;
 }
+
+//submission alert styling
+.swal-title {
+  font-family: $primary-font;
+  font-size: 24px;
+  color: $bell-blue;
+}
+
+.swal2-html-container {
+  font-size: 16px;
+  color: #333;
+  font-family: $primary-font;
+}
+
+.swal-confirm-button {
+  background-color: $bell-blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
