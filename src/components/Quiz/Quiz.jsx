@@ -74,9 +74,9 @@ function Quiz() {
 	}
 
 	return (
-	<section className="quiz" aria-busy={!questions}>
-		<h1 className="quiz__title">{questions ? "Quiz" : "Loading..."}</h1>
-		{questions.length && (<>
+	<section className="quiz" aria-busy={!questions.length}>
+		<h1 className="quiz__title">{questions.length ? "Quiz" : "Loading..."}</h1>
+		{!questions.length ? "" : (<>
 			<progress
 				className="quiz__progress"
 				min={1}
