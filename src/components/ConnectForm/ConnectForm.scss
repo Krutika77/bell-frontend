@@ -6,6 +6,16 @@
   padding: 2rem;
   width: 100%;
 
+  &__title {
+    font-family: $secondary-font;
+
+    font-weight: 600;
+  }
+  &__label {
+    font-family: $primary-font;
+    color: $bell-blue;
+    font-weight: 600;
+  }
   &__details {
     padding: 2rem;
     @include flex-container($align: flex-start, $justify: space-around);
@@ -53,13 +63,21 @@
   &__button {
     background-color: $bell-blue;
     color: white;
+    font-size: 1rem;
+    font-weight: $font-weight-bold;
     border: none;
     padding: 1rem;
     border-radius: 1rem;
     cursor: pointer;
 
+    &:hover {
+      background-color: $bell-gray;
+      color: $bell-blue;
+      border: 1px solid $bell-blue;
+    }
     &:active {
-      background-color: orange;
+      background-color: $bell-blue;
+      color: white;
     }
   }
 }
