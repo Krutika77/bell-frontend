@@ -1,9 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "./Header.scss";
 
 function Header() {
+  const [isScrolled, setIsScrolled] = useState(window.scrollY > 0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 0;
+      console.log("Scrolled:", scrolled);
+      setIsScrolled(scrolled);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); // cleanup event listener on component unmount
+
   return (
-    <section className="header">
+    <section className={`header ${isScrolled ? "header--shadow" : ""}`}>
       <NavLink to="/" className="header__title">
         Bell Impact
       </NavLink>
