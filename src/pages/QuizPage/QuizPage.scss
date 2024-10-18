@@ -57,6 +57,9 @@
 			background-color: rgba($bell-blue, .1);
 		}
 	}
+	&__answer-btn {
+		margin-right: 1rem;
+	}
 
 	&__submit-btn, &__nav-btn {
 		color: rgba($bell-blue, .5);

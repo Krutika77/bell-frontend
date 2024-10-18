@@ -1,35 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import "./QuizPage.scss";
 
-// Mock data for testing the component function until we have a better idea of the logic
-const mockData = [
-	{
-		question: "What's your favourite colour?",
-		answers: [
-			"Cyan",
-			"Magenta",
-			"Yellow",
-			"Black"
-		]
-	},
-	{
-		question: "Dogs or cats?",
-		answers: [
-			"Dogs",
-			"Cats",
-			"Birds, actually"
-		]
-	},
-	{
-		question: "Pizza. Pineapple. Answer quickly.",
-		answers: [
-			"YES!",
-			"NO!!!",
-			"It's alright.",
-			"Why do people fight about this"
-		]
-	}
-]
+const qs = {
+	locations: "Which region do you call home or feel most connected to?",
+	target_demographics: "Which demographic do you feel most passionate about supporting?",
+	project_focuses: "Which of these project goals do you find most inspiring?"
+}
 
 function QuizPage() {
 	const [questions, setQuestions] = useState([]),
@@ -40,9 +17,21 @@ function QuizPage() {
 		submitRef = useRef(null);
 
 	useEffect(() => {
-		// get the questions... from the database? or maybe we define the
-		// questions & logic on the front end? many decisions to make.
-		setQuestions(mockData);
+		setQuestions(() => []);
+		(async () => {
+			let newQs = [];
+			const response = await axios.get(`${import.meta.env.VITE_API_URL}/categories`);
+			console.log(response);
+			const data = response.data;
+
+			for (const [k, q] of Object.entries(qs)) {
+				newQs.push({
+					question: q,
+					answers: data[k]
+				});
+			}
+			setQuestions(() => newQs);
+		})();
 	}, []);
 
 	// record chosen answer - and if this was the final question, focus on submit button
