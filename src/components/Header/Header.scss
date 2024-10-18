@@ -13,18 +13,19 @@
   &__title {
     color: $white;
     font-family: $secondary-font;
-    font-weight: 600;
+    font-weight: 800;
     font-size: 1.5rem;
   }
 
   &__nav {
     @include flex-container($justify: space-around);
     width: 40vw;
+    color: $bell-gray;
   }
 
   &__link {
     cursor: pointer;
-    color: $bell-gray;
+    color: inherit;
     padding: 0.5rem 0.8rem;
     text-decoration: none;
 
