@@ -4,11 +4,34 @@ import "./Header.scss";
 function Header() {
   return (
     <section className="header">
-      <h1 className="header__title">Bell Impact</h1>
+      <NavLink to="/" className="header__title">
+        Bell Impact
+      </NavLink>
       <nav className="header__nav">
-        <NavLink>Explore</NavLink>
-        <NavLink>Choose</NavLink>
-        <NavLink>Forum</NavLink>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? "header__link header__link--active" : "header__link"
+          }
+        >
+          Explore
+        </NavLink>
+        <NavLink
+          to="/choose"
+          className={({ isActive }) =>
+            isActive ? "header__link header__link--active" : "header__link"
+          }
+        >
+          Choose
+        </NavLink>
+        <NavLink
+          to="/forum"
+          className={({ isActive }) =>
+            isActive ? "header__link header__link--active" : "header__link"
+          }
+        >
+          Forum
+        </NavLink>
       </nav>
     </section>
   );

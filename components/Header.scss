@@ -1,0 +1,53 @@
+@use "../src/styles/mixins" as *;
+@use "../src/styles/variables" as *;
+@use "../src/styles/typography";
+.header {
+  @include flex-container($justify: space-between);
+  background-color: $bell-blue;
+  padding: 1.5rem 2rem;
+  color: $bell-gray;
+
+  &__title {
+    color: $white;
+    font-family: $secondary-font;
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+
+  &__nav {
+    @include flex-container($justify: space-around);
+    width: 40vw;
+  }
+
+  &__link {
+    cursor: pointer;
+    color: $bell-gray;
+    padding: 0.5rem 0.8rem;
+    text-decoration: none;
+
+    &:hover {
+      color: $white;
+      text-decoration: underline;
+    }
+
+    &:focus,
+    &:active {
+      color: $white;
+      border-radius: 10px;
+      border: 1px solid $white;
+      text-decoration: none;
+    }
+
+    &:visited {
+      color: $bell-gray;
+      text-decoration: none;
+    }
+
+    &--active {
+      color: $white;
+      border-radius: 10px;
+      border: 1px solid $white;
+      text-decoration: none;
+    }
+  }
+}
