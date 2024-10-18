@@ -1,31 +1,28 @@
 import React, { useEffect, useState } from "react";
 import './HeroCarousel.scss';
-import image1 from '../../assets/images/carousel/image-1.png';
-import image2 from '../../assets/images/carousel/image-2.jpg';
-import image3 from '../../assets/images/carousel/image-3.jpg';
 
 const HeroCarousel = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [lastScrollTime, setLastScrollTime] = useState(0);
     const slides = [
         {
-            title: "Bell Let’s Talk Day 2025 to Prioritize Youth Mental Health as Young Canadians Face Growing Crisis",
-            description: "Bell unveiled MHRC’s new report on youth mental health and announced it will prioritize youth mental health on Bell Let’s Talk Day (January 22, 2025) and launch a text-to-donate campaign with 100% of funds raised going to six youth mental health providers.",
-            link: "https://letstalk.bell.ca/news/bell-lets-talk-day-2025-to-prioritize-youth-mental-health-as-young-canadians-face-growing-crisis/",
+            title: "Introducing Bell for Better",
+            description: "From support for mental health and protecting the environment, to accessibility and privacy, we are investing in society for a better tomorrow.",
+            link: "https://www.bell.ca/Bell-for-Better",
+            image: 'https://www.bell.ca/Styles/assets/images/bottom_image.jpg',
+        },
+        {
+            title: "Moving mental health forward",
+            description: "Bell Let’s Talk has a vision of a Canada where everyone can get the mental health support they need",
+            link: "https://letstalk.bell.ca/",
             image: 'https://media.graphassets.com/resize=width:1920,height:1432,fit:crop/output=format:webp/CgfJy3ckSlCCjJwsLaPG',
         },
         {
-            title: "Join Our Community",
-            description: "Connect with like-minded individuals.",
-            link: "#",
-            image: 'https://media.graphassets.com/resize=width:1920,height:1432,fit:crop/output=format:webp/CUmdZn9vRjGdKRw63m9q',
-        },
-        {
-            title: "Stay Updated",
-            description: "Subscribe for the latest news.",
-            link: "#",
-            image: 'https://media.graphassets.com/resize=width:1920,height:1432,fit:crop/output=format:webp/sgBW314CRdCV6fM9H4pN',
-        },
+            title: "BELL Accessibility services centre",
+            description: "Products and services with your needs in mind like voice control, call management and personalized accessibility settings.",
+            link: "https://www.bell.ca/Accessibility_services#INT=OTH_Accessserv_TXT_FedNav",
+            image: 'https://fs.npstatic.com/userfiles/7613938/image/AccessibilityAndroid.png',
+        }
     ];
 
     const handleScroll = (event) => {
