@@ -13,7 +13,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/connect" element={<ConnectPage />} />
+        <Route path="/forum" element={<ConnectPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
