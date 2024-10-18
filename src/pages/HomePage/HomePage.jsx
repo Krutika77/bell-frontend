@@ -1,14 +1,14 @@
-import React from 'react'
-import HeroCarousel from '../../components/HeroCarousel/HeroCarousel'
-import CardGrid from '../../components/CardGrid/CardGrid'
+import React from "react";
+import HeroCarousel from "../../components/HeroCarousel/HeroCarousel";
+import CardGrid from "../../components/CardGrid/CardGrid";
 
 function HomePage() {
   return (
     <div>
-        <HeroCarousel/>
-        <CardGrid /> 
+      <HeroCarousel />
+      <CardGrid />
     </div>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;
