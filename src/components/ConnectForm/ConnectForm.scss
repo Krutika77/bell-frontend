@@ -81,12 +81,3 @@
   background-repeat: no-repeat;
   @include flex-container($justify: center);
 }
-
-// .input__wrapper {
-//   @include flex-container($justify: center);
-//   background-image: url("../../assets/image/Talk\ Bubble\ social\ media\ square.jpg");
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   padding-bottom: 7rem;
-//   //   padding: 11rem 11rem 19rem 11rem;
-// }
