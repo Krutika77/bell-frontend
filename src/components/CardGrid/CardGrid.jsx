@@ -1,101 +1,121 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Card from '../Card/Card.jsx';
 import './CardGrid.scss';
 
-const cardData = [
-  { title: 'Kids Help Phone', action: 'resources', tag: 'Children & youth', imageUrl: 'https://media.graphassets.com/resize=width:640/output=format:jpg/53L1l80PQTOpmPvT4dsv' },
-  { title: 'CHU Sainte-Justine', action: 'learn', tag: 'Capacity building', imageUrl: 'https://media.graphassets.com/resize=width:640/output=format:jpg/RCt9BCwQHaktO23JT86u' },
-  { title: 'Wabanaki Two-Spirit Alliance', action: 'volunteer', tag: 'Indigenous wellness', imageUrl: 'https://media.graphassets.com/resize=width:640/output=format:jpg/cGC3jSPQBO64pdUyvtQ1' },
-];
-
-const categories = Array.from(new Set(cardData.map(card => card.tag)));
-const actions = Array.from(new Set(cardData.map(card => card.action)));
-
 const CardGrid = () => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedActions, setSelectedActions] = useState([]);
-  const [selectedAction, setSelectedAction] = useState(''); 
-  const [selectedCategory, setSelectedCategory] = useState(''); 
+  const [organizations, setOrganizations] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
-  const filteredCards = cardData.filter(card => {
-    const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(card.tag);
-    const matchesAction = selectedActions.length === 0 || selectedActions.includes(card.action);
-    
-    return matchesCategory && matchesAction; 
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedFocus, setSelectedFocus] = useState('');
+  const [selectedDemographics, setSelectedDemographics] = useState('');
+
+  useEffect(() => {
+    const fetchOrganizations = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/organizations');
+        setOrganizations(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchOrganizations();
+  }, []);
+
+  const filteredOrganizations = organizations.filter((org) => {
+    const matchesLocation = !selectedLocation || org.location === selectedLocation;
+    const matchesFocus = !selectedFocus || JSON.parse(org.project_focus).includes(selectedFocus);
+    const matchesDemographics = !selectedDemographics || JSON.parse(org.target_demographics).includes(selectedDemographics);
+    return matchesLocation && matchesFocus && matchesDemographics;
   });
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentOrganizations = filteredOrganizations.slice(indexOfFirstItem, indexOfLastItem);
+
+  const nextPage = () => {
+    if (currentPage < Math.ceil(filteredOrganizations.length / itemsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleLocationChange = (e) => setSelectedLocation(e.target.value);
+  const handleFocusChange = (e) => setSelectedFocus(e.target.value);
+  const handleDemographicsChange = (e) => setSelectedDemographics(e.target.value);
+
   const handleAllClick = () => {
-    setSelectedCategories([]); 
-    setSelectedActions([]); 
-    setSelectedAction(''); 
-    setSelectedCategory(''); 
-  };
-
-  const handleCategoryChange = (e) => {
-    const value = e.target.value;
-    setSelectedCategory(value); 
-    if (value && !selectedCategories.includes(value)) {
-      setSelectedCategories(prev => [...prev, value]);
-    }
-  };
-
-  const handleActionChange = (e) => {
-    const value = e.target.value;
-    setSelectedAction(value); 
-    if (value && !selectedActions.includes(value)) {
-      setSelectedActions(prev => [...prev, value]);
-    }
-  };
-
-  const removeFilter = (type, value) => {
-    if (type === 'category') {
-      setSelectedCategories(prev => prev.filter(item => item !== value));
-    } else if (type === 'action') {
-      setSelectedActions(prev => prev.filter(item => item !== value));
-    }
+    setSelectedLocation('');
+    setSelectedFocus('');
+    setSelectedDemographics('');
+    setCurrentPage(1);
   };
 
   return (
     <div>
       <div className="filter-container">
         <button onClick={handleAllClick}>All</button>
-        
-        <select value={selectedAction} onChange={handleActionChange}>
-          <option value="">Select Action</option>
-          {actions.map((action) => (
-            <option key={action} value={action}>
-              {action}
+
+        <select value={selectedLocation} onChange={handleLocationChange}>
+          <option value="">Select Location</option>
+          {[...new Set(organizations.map((org) => org.location))].map((location) => (
+            <option key={location} value={location}>
+              {location}
             </option>
           ))}
         </select>
 
-        <select value={selectedCategory} onChange={handleCategoryChange}>
-          <option value="">Select Category</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
+        <select value={selectedFocus} onChange={handleFocusChange}>
+          <option value="">Select Project Focus</option>
+          {[...new Set(organizations.flatMap((org) => JSON.parse(org.project_focus)))].map((focus) => (
+            <option key={focus} value={focus}>
+              {focus}
             </option>
           ))}
         </select>
-      </div>
 
-      <div className="active-filters">
-        {selectedCategories.map((category) => (
-          <span key={category} onClick={() => removeFilter('category', category)}>
-            {category} ×
-          </span>
-        ))}
-        {selectedActions.map((action) => (
-          <span key={action} onClick={() => removeFilter('action', action)}>
-            {action} ×
-          </span>
-        ))}
+        <select value={selectedDemographics} onChange={handleDemographicsChange}>
+          <option value="">Select Target Demographics</option>
+          {[...new Set(organizations.flatMap((org) => JSON.parse(org.target_demographics)))].map((demographics) => (
+            <option key={demographics} value={demographics}>
+              {demographics}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="card-grid">
-        {filteredCards.map((card, index) => (
-          <Card key={index} title={card.title} tag={card.tag} imageUrl={card.imageUrl} />
+        {currentOrganizations.map((org) => (
+          <Card
+            key={org.id}
+            title={org.name}
+            tags={JSON.parse(org.project_focus)} // Parse the tags as an array
+            imageUrl={org.imageUrl}
+            link={org.website}
+          />
         ))}
+      </div>
+
+      <div className="pagination">
+        <button onClick={prevPage} disabled={currentPage === 1}>
+          ← Prev
+        </button>
+        <span>
+          Page {currentPage} of {Math.ceil(filteredOrganizations.length / itemsPerPage)}
+        </span>
+        <button
+          onClick={nextPage}
+          disabled={currentPage === Math.ceil(filteredOrganizations.length / itemsPerPage)}
+        >
+          Next →
+        </button>
       </div>
     </div>
   );
