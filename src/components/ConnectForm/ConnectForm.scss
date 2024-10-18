@@ -1,0 +1,92 @@
+@use "../../styles/mixins" as *;
+@use "../../styles/variables" as *;
+@use "../../styles/typography" as *;
+
+.form {
+  padding: 2rem;
+  width: 100%;
+
+  &__details {
+    padding: 2rem;
+    @include flex-container($align: flex-start, $justify: space-around);
+  }
+
+  &__contact {
+    @include flex-container($direction: column, $justify: space-between);
+    height: 17rem;
+  }
+
+  &__comment {
+    @include flex-container($direction: column, $justify: center);
+  }
+
+  &__input {
+    padding: 0 1rem;
+    height: 2.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+    color: black;
+    background-color: white;
+    border-radius: 0.8rem;
+    border: 0.0625rem solid grey;
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+
+    @include tablet {
+      width: 18rem;
+      height: 2.375rem;
+      font-size: 0.875rem;
+      line-height: 1.375rem;
+    }
+
+    &:active,
+    &:focus {
+      border: 0.0625rem solid $bell-blue;
+      outline: none;
+    }
+
+    &::placeholder {
+      color: grey;
+    }
+  }
+
+  &__button {
+    background-color: $bell-blue;
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    &:active {
+      background-color: orange;
+    }
+  }
+}
+
+.button-wrapper {
+  @include flex-container($justify: center);
+}
+
+#comment {
+  border: none;
+  outline: none;
+  width: 20rem;
+  //   padding: 10rem;
+  padding: 0 2rem;
+  height: 20rem;
+  background: transparent;
+  background-image: url("../../assets/image/Talk\ Bubble\ social\ media\ square.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  @include flex-container($justify: center);
+}
+
+// .input__wrapper {
+//   @include flex-container($justify: center);
+//   background-image: url("../../assets/image/Talk\ Bubble\ social\ media\ square.jpg");
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   padding-bottom: 7rem;
+//   //   padding: 11rem 11rem 19rem 11rem;
+// }

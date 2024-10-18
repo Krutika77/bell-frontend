@@ -1,20 +1,21 @@
-import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.scss";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import ConnectForm from "./pages/ConnectForm";
+import HomePage from "./pages/HomePage/HomePage";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import ConnectPage from "./pages/ConnectPage/ConnectPage";
 
-const App = () => {
+function App() {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/connect" element={<ConnectForm />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/connect" element={<ConnectPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
   );
-};
+}
 
 export default App;
