@@ -12,7 +12,8 @@ function QuizPage() {
 	const [questions, setQuestions] = useState([]),
 		[choices, setChoices] = useState([]),
 		[index, setIndex] = useState(0),
-		[done, setDone] = useState(false);
+		[done, setDone] = useState(false),
+		[initiatives, setInitiatives] = useState([]);
 	const subheadingRef = useRef(null),
 		submitRef = useRef(null);
 
@@ -31,6 +32,7 @@ function QuizPage() {
 				});
 			}
 			setQuestions(() => newQs);
+			setChoices([]);
 		})();
 	}, []);
 
@@ -58,8 +60,17 @@ function QuizPage() {
 		subheadingRef.current?.focus();
 	}
 
-	function handleSubmit() {
+	async function handleSubmit() {
 		setDone(true);
+		try {
+			const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/organizations/filter?project_focus=${choices[0]}&location=${choices[1]}&target_demographics=${choices[2]}`);
+			console.log(data);
+
+			setInitiatives(data);
+		} catch (error) {
+			// TODO something...
+			console.log(error);
+		}
 	}
 
 	return (
@@ -75,17 +86,19 @@ function QuizPage() {
 			></progress>
 
 			<h2 className="quiz__subheading" tabIndex={-1} ref={subheadingRef}>
-				{done && <>Your Choices:</>}
+				{done && !initiatives.length && <>Searching...</>}
+				{done && initiatives.length && <>We think these are perfect for you!</>}
 				{!done && <>{index + 1}. {questions[index]?.question}</>}
 			</h2>
 
-			{done && (<>
+			{done && initiatives.length && (<>
 				<ol>
-					{choices.map((a, i) => <li key={i}>{a}</li>)}
+					{initiatives.map((init) => <li key={init.id}>{JSON.stringify(init)}</li>)}
 				</ol>
 				<button
 					onClick={()=>{
 						setDone(false);
+						setInitiatives([]);
 						setChoices([]);
 						setIndex(0);
 					}}
