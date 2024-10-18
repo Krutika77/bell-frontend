@@ -81,7 +81,7 @@ function Quiz() {
 				className="quiz__progress"
 				min={1}
 				max={questions.length}
-				value={index}
+				value={choices.length}
 				aria-label="Quiz completion"
 			></progress>
 
