@@ -12,9 +12,9 @@
     font-weight: 600;
   }
   &__label {
-    font-family: $primary-font;
+    font-family: $secondary-font;
     color: $bell-blue;
-    font-weight: 600;
+    font-weight: 800;
   }
   &__details {
     padding: 2rem;
@@ -41,6 +41,7 @@
     border: 0.0625rem solid grey;
     background-repeat: no-repeat;
     background-position: right 1rem center;
+    font-family: $secondary-font;
 
     @include tablet {
       width: 18rem;
@@ -64,6 +65,7 @@
     background-color: $bell-blue;
     color: white;
     font-size: 1rem;
+    font-family: $secondary-font;
     font-weight: $font-weight-bold;
     border: none;
     padding: 1rem;
