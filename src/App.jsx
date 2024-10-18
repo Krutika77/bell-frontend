@@ -1,12 +1,20 @@
-import "./App.scss";
-import Quiz from "./components/Quiz/Quiz";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import './App.scss'
+import HomePage from './pages/HomePage/HomePage'
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import ConnectForm from "./pages/ConnectForm";
 
 function App() {
+
   return (
-    <>
-      <Quiz/>
-    </>
-  );
+    <BrowserRouter>
+    <Routes>
+      <Route path = '/' element = {<HomePage/>} />
+      <Route path="/connect" element={<ConnectForm />} />
+    </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;
