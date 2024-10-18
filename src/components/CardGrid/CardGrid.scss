@@ -3,6 +3,7 @@
 @use "../../styles/typography" as *;
 
 .card-grid {
+    margin: 2rem;
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
