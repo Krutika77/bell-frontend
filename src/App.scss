@@ -7,10 +7,21 @@
   background-color: $white;
   margin: 0;
   padding: 0;
+}
 
-  @include desktop {
-    max-width: 63.75rem;
-    margin: 0 auto;
-    flex-wrap: wrap;
-  }
+body{
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
