@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ConnectForm.scss";
 
 function ConnectForm() {
@@ -10,14 +11,15 @@ function ConnectForm() {
   });
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const validateFomr = () => {
-    const { name, email, phoneNu, ber, comment } = formData;
+  const validateForm = () => {
+    const { name, email, phoneNumber, comment } = formData;
     const newErrors = {};
 
     if (!name) newErrors.name = "Name is required.";
@@ -41,13 +43,26 @@ function ConnectForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formErrors = validateFomr();
+    const formErrors = validateForm();
 
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
       console.log("Form submitted: ", formData);
       setErrors({});
+
+      alert(
+        "We received your message and will get in touch with you soon! Thank you for connecting with us."
+      );
+
+      setFormData({
+        name: "",
+        email: "",
+        phoneNumber: "",
+        comment: "",
+      });
+
+      navigate("/");
     }
   };
 
@@ -115,7 +130,7 @@ function ConnectForm() {
         </div>
       </section>
       <div className="button-wrapper">
-        <button className="form__button" type="text">
+        <button className="form__button" type="submit">
           Submit
         </button>
       </div>
