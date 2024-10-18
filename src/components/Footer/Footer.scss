@@ -1,0 +1,17 @@
+@use "../../styles/mixins" as *;
+@use "../../styles/variables" as *;
+
+.footer {
+  @include flex-container($justify: space-between, $align: center);
+  background-color: $bell-gray;
+  padding: 3.5rem 2rem;
+  color: $bell-blue;
+  font-size: 1.3rem;
+
+  &__about {
+    @include flex-container($direction: column, $justify: space-between);
+  }
+  &__socials {
+    @include flex-container($direction: column, $justify: space-between);
+  }
+}
