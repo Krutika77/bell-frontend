@@ -2,6 +2,9 @@
 @use "../../styles/variables" as *;
 
 .footer {
+  overflow-x: hidden;
+  width: 100vw;
+
   @include flex-container($justify: space-between, $align: flex-start);
   background-color: $bell-gray;
   padding: 1rem 2rem;

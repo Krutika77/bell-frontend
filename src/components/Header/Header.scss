@@ -3,6 +3,9 @@
 @use "../../styles/typography" as *;
 
 .header {
+  overflow-x: hidden;
+  width: 100vw;
+
   @include flex-container($justify: space-between);
   background-color: $bell-blue;
   padding: 1.5rem 2rem;
