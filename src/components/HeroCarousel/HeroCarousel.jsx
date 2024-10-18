@@ -4,6 +4,8 @@ import './HeroCarousel.scss';
 const HeroCarousel = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [lastScrollTime, setLastScrollTime] = useState(0);
+    const [isLocked, setIsLocked] = useState(true); 
+    const [hasScrolledToEnd, setHasScrolledToEnd] = useState(false); 
     const slides = [
         {
             title: "Introducing Bell for Better",
@@ -26,30 +28,49 @@ const HeroCarousel = () => {
     ];
 
     const handleScroll = (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
 
         const currentTime = new Date().getTime();
         if (currentTime - lastScrollTime < 1000) return; 
 
         setLastScrollTime(currentTime);
 
-        // Determine the scroll direction
         if (event.deltaY > 0) {
             // Scroll down
-            setActiveIndex((prevIndex) => Math.min(prevIndex + 1, slides.length - 1));
+            if (activeIndex < slides.length - 1) {
+                setActiveIndex((prevIndex) => prevIndex + 1);
+                setHasScrolledToEnd(false); 
+            } else {
+                setHasScrolledToEnd(true);
+                setIsLocked(false); 
+            }
         } else {
             // Scroll up
-            setActiveIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+            if (hasScrolledToEnd) {
+                setIsLocked(true); 
+            }
+
+            if (activeIndex > 0) {
+                setActiveIndex((prevIndex) => prevIndex - 1);
+            } else {
+                setIsLocked(false); 
+            }
         }
     };
 
     useEffect(() => {
-        window.addEventListener("wheel", handleScroll, { passive: false });
+        const scrollHandler = (event) => {
+            if (isLocked) {
+                handleScroll(event);
+            }
+        };
+
+        window.addEventListener("wheel", scrollHandler, { passive: false });
 
         return () => {
-            window.removeEventListener("wheel", handleScroll);
+            window.removeEventListener("wheel", scrollHandler);
         };
-    }, [lastScrollTime]);
+    }, [lastScrollTime, isLocked, hasScrolledToEnd]);
 
     return (
         <div className="hero-carousel">
