@@ -99,3 +99,9 @@
   background-repeat: no-repeat;
   @include flex-container($justify: center);
 }
+
+.error {
+  color: red;
+  font-style: italic;
+  font-size: 0.9rem;
+}

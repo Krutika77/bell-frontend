@@ -1,9 +1,54 @@
-import React from "react";
+import { useState } from "react";
 import "./ConnectForm.scss";
 
 function ConnectForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    comment: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const validateFomr = () => {
+    const { name, email, phoneNu, ber, comment } = formData;
+    const newErrors = {};
+
+    if (!name) newErrors.name = "Name is required.";
+    if (!email) newErrors.email = "Email is required.";
+    if (!phoneNumber) newErrors.phoneNumber = "Phone number is required.";
+    if (!comment) newErrors.comment = "Comment is required.";
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) {
+      newErrors.email = "Invalid email format.";
+    }
+
+    const phoneRegex = /^[0-9]{10}$/;
+    if (phoneNumber && !phoneRegex.test(phoneNumber)) {
+      newErrors.phoneNumber = "Phone number must be 10 digits.";
+    }
+
+    return newErrors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formErrors = validateFomr();
+
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+    } else {
+      console.log("Form submitted: ", formData);
+      setErrors({});
+    }
   };
 
   return (
@@ -18,10 +63,13 @@ function ConnectForm() {
             type="text"
             id="name"
             name="name"
-            // value=""
+            value={formData.name}
+            onChange={handleChange}
             placeholder="Enter your name here"
             className="form__input"
           />
+          {errors.name && <p className="error">{errors.name}</p>}
+
           <label htmlFor="email" className="form__label">
             Email
           </label>
@@ -29,10 +77,13 @@ function ConnectForm() {
             type="text"
             id="email"
             name="email"
-            // value=""
+            value={formData.email}
+            onChange={handleChange}
             placeholder="Enter your email here"
             className="form__input"
           />
+          {errors.email && <p className="error">{errors.email}</p>}
+
           <label htmlFor="phoneNumber" className="form__label">
             Phone Number
           </label>
@@ -40,24 +91,27 @@ function ConnectForm() {
             type="text"
             id="phoneNumber"
             name="phoneNumber"
-            // value=""
+            value={formData.phoneNumber}
+            onChange={handleChange}
             placeholder="Enter your phone number here"
             className="form__input"
           />
+          {errors.phoneNumber && <p className="error">{errors.phoneNumber}</p>}
         </div>
         <div className="form__comment">
           <label htmlFor="comment" className="form__label">
             Comment
           </label>
-
           <input
             type="text"
             id="comment"
             name="comment"
-            // value=""
+            value={formData.comment}
+            onChange={handleChange}
             placeholder="Enter your comment here"
             className="form__input"
           />
+          {errors.comment && <p className="error">{errors.comment}</p>}
         </div>
       </section>
       <div className="button-wrapper">
